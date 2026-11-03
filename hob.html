@@ -1,0 +1,375 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>My Hobbies and Interest</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+* {
+    word-wrap: break-word;
+}
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background:
+                linear-gradient(rgba(20, 35, 27, 0.82),
+                                rgba(20, 35, 27, 0.90)),
+                url("wuthering-bg.png") center/cover fixed,
+                #26382d;
+            min-height: 100vh;
+            padding: 35px 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 1.8;
+        }
+
+        .as {
+            width: 100%;
+            max-width: 900px;
+            padding: 45px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(243, 235, 221, 0.96);
+            border: 1px solid #A8B49A;
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+            animation: fadeIn 1s ease;
+            transition: box-shadow 0.4s ease;
+        }
+
+        .as:hover {
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.45);
+        }
+
+        /* Bamboo-inspired decorative accents */
+        .as::before,
+        .as::after {
+            content: "";
+            position: absolute;
+            width: 5px;
+            height: 130px;
+            background: linear-gradient(
+                to bottom,
+                #71866B,
+                #A8B49A,
+                #71866B
+            );
+            opacity: 0.45;
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .as::before {
+            top: 20px;
+            left: 15px;
+            transform: rotate(15deg);
+        }
+
+        .as::after {
+            bottom: 20px;
+            right: 15px;
+            transform: rotate(15deg);
+        }
+
+        h1 {
+            text-align: center;
+            color: #293D30;
+            margin-bottom: 28px;
+            font-size: clamp(1.8rem, 5vw, 2.7rem);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            line-height: 1.4;
+            text-shadow: 1px 2px 3px rgba(41, 61, 48, 0.15);
+            border-bottom: 2px solid #A8B49A;
+            padding-bottom: 18px;
+        }
+
+        h1::after {
+            content: "❧";
+            display: block;
+            color: #71866B;
+            font-size: 1.5rem;
+            margin-top: 8px;
+        }
+
+        h2 {
+            color: #526B50;
+            border-left: 5px solid #8FA184;
+            padding-left: 14px;
+            margin-top: 30px;
+            margin-bottom: 18px;
+            font-size: 1.5rem;
+            font-style: italic;
+            transition: padding-left 0.3s ease;
+        }
+
+        h2:hover {
+            padding-left: 22px;
+        }
+
+        p {
+            color: #41483E;
+            margin: 12px 0;
+            font-size: 1.08rem;
+            line-height: 1.9;
+            text-align: justify;
+        }
+
+        em {
+            color: #71866B;
+            font-weight: 600;
+        }
+
+        strong {
+            color: #526B50;
+        }
+
+        /* Game image gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .gallery img {
+            display: block;
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            padding: 8px;
+            background: #E2DDCC;
+            border: 1px solid #A8B49A;
+            border-radius: 14px;
+            box-shadow: 0 8px 22px rgba(41, 61, 48, 0.18);
+            transition: transform 0.4s ease,
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease;
+        }
+
+        .gallery img:hover {
+            transform: translateY(-7px) scale(1.03);
+            border-color: #71866B;
+            box-shadow: 0 15px 28px rgba(41, 61, 48, 0.28);
+        }
+
+        /* Home button */
+        .button-container {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        a.btn {
+    display: inline-block;
+    background: #526B50;
+    color: #F3EBDD;
+    padding: 12px 30px;
+    border: 1px solid #71866B;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 14px rgba(41, 61, 48, 0.2);
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+        a.btn:hover {
+            background: #DCC9A3;
+            color: #293D30;
+            transform: translateY(-4px);
+            box-shadow: 0 9px 20px rgba(41, 61, 48, 0.25);
+        }
+
+        a:focus-visible {
+            outline: 3px solid #71866B;
+            outline-offset: 4px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Tablet layout */
+        @media (max-width: 750px) {
+            .gallery {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .gallery img {
+                height: 230px;
+            }
+        }
+
+        /* Mobile layout */
+        /* =====================================
+   SMARTPHONE OPTIMIZATION
+===================================== */
+@media (max-width: 600px) {
+
+    body {
+        padding: 12px;
+        background-attachment: scroll;
+        align-items: flex-start;
+    }
+
+    .as {
+        width: 100%;
+        padding: 20px 15px;
+        border-radius: 14px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        line-height: 1.3;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+    }
+
+    h1::after {
+        font-size: 1.2rem;
+    }
+
+    h2 {
+        font-size: 1.1rem;
+        padding-left: 10px;
+        margin-top: 20px;
+        margin-bottom: 12px;
+    }
+
+    p {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        text-align: left;
+    }
+
+    .gallery {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-top: 18px;
+    }
+
+    .gallery img {
+        width: 100%;
+        height: auto;
+        max-height: 250px;
+        object-fit: cover;
+    }
+
+    .button-container {
+        margin-top: 25px;
+    }
+
+    a.btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    .as::before,
+    .as::after {
+        display: none;
+    }
+}
+@media (max-width: 400px) {
+
+    .as {
+        padding: 15px 12px;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    .gallery img {
+        max-height: 200px;
+    }
+}
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="as">
+
+        <h1>My Hobbies and Interest</h1>
+
+        <p>
+            My hobbies include <em>playing games</em>, <em>sleeping</em>,
+            and <em>reading manga</em>. I also enjoy learning new things
+            about <strong>technology and computers</strong>. These
+            activities allow me to relax, enjoy my free time, and explore
+            my interests.
+        </p>
+
+        <h2>My Games</h2>
+
+        <div class="gallery">
+            <img src="1.jpg" alt="Clash of Clans">
+            <img src="3.jpg" alt="Wuthering Waves">
+            <img src="5.jpg" alt="Hiyuki character">
+        </div>
+
+        <div class="button-container">
+            <a href="act-rigor fl.html" class="btn">❧ Home ❧</a>
+        </div>
+
+    </div>
+</body>
+</html>
+```

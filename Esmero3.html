@@ -1,0 +1,2412 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#080d1a">
+
+<title>BSIT Student Portal | Cosmic Edition</title>
+
+<style>
+
+:root {
+    --bg: #080d1a;
+    --panel: rgba(13, 22, 42, 0.78);
+    --panel-dark: rgba(8, 15, 30, 0.94);
+    --cyan: #67e8f9;
+    --blue: #7dd3fc;
+    --violet: #b4a0ff;
+    --text: #edf3ff;
+    --muted: #a5b4ce;
+    --border: rgba(135, 174, 235, 0.20);
+    --radius: 20px;
+}
+html,
+body{
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+@media (max-width:560px){
+
+    .card-container{
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .card{
+        padding: 20px;
+    }
+
+    .profile-card,
+    .form-container,
+    .media-card{
+        padding: 18px;
+    }
+}
+body {
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--text);
+    background-color: var(--bg);
+
+    /* Background artwork */
+    background-image:
+        linear-gradient(
+            180deg,
+            rgba(5, 10, 24, 0.53),
+            rgba(8, 13, 26, 0.77) 45%,
+            rgba(6, 10, 22, 0.90)
+        ),
+        url("wuthering-bg.png");
+
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--cyan);
+    text-decoration: none;
+    transition: color .25s ease;
+}
+
+a:hover {
+    color: var(--violet);
+}
+
+button, input, select, textarea {
+    font: inherit;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.container{
+    width: min(1100px, 100%);
+    padding-inline: 15px;
+    margin-inline: auto;
+}
+
+::selection {
+    color: #080d1a;
+    background: var(--cyan);
+}
+
+/* =========================================
+   2. FALLING STARS
+========================================= */
+.starfield {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.starfield span {
+    position: absolute;
+    top: -20px;
+    left: var(--left);
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: #e0f7ff;
+    box-shadow: 0 0 7px var(--cyan);
+    opacity: 0;
+    animation: starFall var(--duration) linear var(--delay) infinite;
+}
+
+.starfield span:nth-child(3n) {
+    width: 3px;
+    height: 3px;
+    background: var(--violet);
+    box-shadow: 0 0 8px var(--violet);
+}
+
+@keyframes starFall {
+    0% {
+        transform: translate3d(0, -5vh, 0);
+        opacity: 0;
+    }
+    12% {
+        opacity: .5;
+    }
+    85% {
+        opacity: .35;
+    }
+    100% {
+        transform: translate3d(35px, 110vh, 0);
+        opacity: 0;
+    }
+}
+
+/* Content stays above the decorative stars */
+header, main, footer {
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================================
+   3. NAVIGATION
+========================================= */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 13, 28, .84);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+nav {
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 14px 0;
+}
+
+.logo-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: white;
+}
+
+.logo-symbol {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    color: var(--cyan);
+    border: 1px solid rgba(103, 232, 249, .45);
+    background: rgba(103, 232, 249, .08);
+    box-shadow: 0 0 20px rgba(103, 232, 249, .09);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.nav-links a {
+    padding: 8px 12px;
+    border-radius: 9px;
+    font-size: .87rem;
+    color: #cbd5e8;
+    transition: background .25s ease, color .25s ease;
+}
+
+.nav-links a:hover {
+    background: rgba(103, 232, 249, .08);
+    color: var(--cyan);
+}
+
+/* =========================================
+   4. HERO SECTION
+========================================= */
+.hero {
+    position: relative;
+    isolation: isolate;
+    padding: 125px 20px 115px;
+    text-align: center;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(93, 116, 220, .20),
+            transparent 65%
+        );
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 430px;
+    height: 430px;
+    left: 50%;
+    top: 10%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: rgba(79, 125, 255, .08);
+    filter: blur(90px);
+    pointer-events: none;
+}
+
+.hero-content {
+    max-width: 850px;
+    margin: auto;
+}
+
+.hero-label {
+    display: inline-block;
+    margin-bottom: 25px;
+    padding: 8px 16px;
+    border: 1px solid rgba(103, 232, 249, .30);
+    border-radius: 100px;
+    background: rgba(103, 232, 249, .06);
+    color: var(--cyan);
+    font-size: .76rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: clamp(2.7rem, 7vw, 5.2rem);
+    font-weight: 750;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    margin-bottom: 25px;
+    text-shadow: 0 5px 35px rgba(0, 0, 0, .3);
+}
+
+h1 span {
+    display: inline-block;
+    color: transparent;
+    background: linear-gradient(
+        100deg,
+        #a5f3fc,
+        #67e8f9 40%,
+        #c4b5fd 85%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+.hero p {
+    max-width: 660px;
+    margin: 0 auto 32px;
+    color: #b4c2da;
+    font-size: 1.05rem;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.main-button, .secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 24px;
+    border-radius: 11px;
+    font-weight: 700;
+    font-size: .94rem;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.main-button {
+    background: linear-gradient(110deg, #67e8f9, #a5b4fc);
+    color: #07111f;
+    box-shadow: 0 6px 25px rgba(103, 232, 249, .15);
+}
+
+.main-button:hover {
+    color: #07111f;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(103, 232, 249, .25);
+}
+
+.secondary-button {
+    border: 1px solid rgba(167, 184, 220, .3);
+    color: var(--text);
+    background: rgba(255, 255, 255, .035);
+}
+
+.secondary-button:hover {
+    transform: translateY(-3px);
+    background: rgba(167, 139, 250, .1);
+}
+
+/* Small atmospheric divider */
+.hero-divider {
+    width: 75px;
+    height: 2px;
+    margin: 42px auto 0;
+    background: linear-gradient(90deg, transparent, var(--cyan), var(--violet), transparent);
+}
+
+/* =========================================
+   5. GENERAL SECTIONS
+========================================= */
+section {
+    padding: 76px 0;
+    scroll-margin-top: 85px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 38px;
+}
+
+.section-kicker {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--cyan);
+    font-size: .73rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+}
+
+.section-title h2 {
+    margin-bottom: 10px;
+    color: #f8faff;
+    font-size: clamp(1.7rem, 4vw, 2.3rem);
+    line-height: 1.25;
+    letter-spacing: -.5px;
+}
+
+.section-title p {
+    color: var(--muted);
+    font-size: .96rem;
+}
+
+.center-content {
+    text-align: center;
+}
+
+/* =========================================
+   6. GLASS PANEL DESIGN
+========================================= */
+.glass-panel,
+.card,
+.profile-card,
+.form-container,
+.media-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, .16);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.card, .profile-card, .form-container, .media-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before,
+.profile-card::before,
+.form-container::before,
+.media-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(103, 232, 249, .5),
+        rgba(180, 160, 255, .5),
+        transparent
+    );
+    pointer-events: none;
+}
+
+/* =========================================
+   7. SCHOOL LOGO
+========================================= */
+.school-logo {
+    width: 145px;
+    height: 145px;
+    object-fit: contain;
+    margin: 0 auto 20px;
+    padding: 12px;
+    border-radius: 24px;
+    background: #fff;
+    border: 1px solid rgba(103, 232, 249, .55);
+    box-shadow: 0 0 30px rgba(103, 232, 249, .09);
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.school-logo:hover {
+    transform: translateY(-5px) rotate(-2deg);
+    box-shadow: 0 0 30px rgba(103, 232, 249, .2);
+}
+
+.logo-caption {
+    color: var(--muted);
+    font-size: .9rem;
+}
+
+/* =========================================
+   8. STUDENT TABLE
+========================================= */
+.table-wrapper{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table{
+    min-width: 600px;
+}
+
+th, td {
+    padding: 17px 20px;
+    border-bottom: 1px solid rgba(135, 174, 235, .12);
+}
+
+th {
+    background: rgba(103, 232, 249, .07);
+    color: var(--cyan);
+    font-size: .79rem;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+}
+
+td {
+    color: #dce5f6;
+    font-size: .91rem;
+}
+
+tbody tr {
+    transition: background .25s ease;
+}
+
+tbody tr:hover {
+    background: rgba(103, 232, 249, .055);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* =========================================
+   9. PROFILE
+========================================= */
+.profile-card {
+    max-width: 440px;
+    margin: auto;
+    padding: 38px 30px;
+    text-align: center;
+    transition: transform .3s ease, border-color .3s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(103, 232, 249, .48);
+}
+
+.profile-image {
+    width: 155px;
+    height: 155px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto 22px;
+    padding: 4px;
+    border: 2px solid transparent;
+    background:
+        linear-gradient(var(--bg), var(--bg)) padding-box,
+        linear-gradient(135deg, var(--cyan), var(--violet)) border-box;
+    box-shadow: 0 0 30px rgba(103, 232, 249, .12);
+    transition: transform .35s ease;
+}
+
+.profile-image:hover {
+    transform: scale(1.04);
+}
+.profile-image{
+    width: 120px;
+    height: 120px;
+}
+@media (max-width:560px){
+    .profile-image{
+        width: 100px;
+        height: 100px;
+    }
+}
+input,
+select,
+textarea{
+    max-width: 100%;
+}
+
+.profile-card h3 {
+    margin-bottom: 5px;
+    color: #fff;
+    letter-spacing: 1.2px;
+    font-size: 1.18rem;
+}
+
+.profile-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    margin: 8px 0 15px;
+    border-radius: 20px;
+    background: rgba(180, 160, 255, .10);
+    color: var(--violet);
+    font-size: .82rem;
+}
+
+.profile-card p {
+    color: var(--muted);
+    font-size: .93rem;
+}
+
+/* =========================================
+   10. TECHNOLOGY CARDS
+========================================= */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.card {
+    padding: 28px;
+    transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(103, 232, 249, .55);
+    box-shadow: 0 15px 40px rgba(25, 65, 110, .17);
+}
+
+.card-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    background: rgba(103, 232, 249, .08);
+    border: 1px solid rgba(103, 232, 249, .20);
+    color: var(--cyan);
+    font-size: 1.55rem;
+}
+
+.card:nth-child(2) .card-icon {
+    color: var(--violet);
+    background: rgba(180, 160, 255, .08);
+    border-color: rgba(180, 160, 255, .22);
+}
+
+.card:nth-child(3) .card-icon {
+    color: var(--blue);
+}
+
+.card h3 {
+    margin-bottom: 10px;
+    color: #e6faff;
+    font-size: 1.12rem;
+}
+
+.card p {
+    color: var(--muted);
+    font-size: .92rem;
+}
+
+/* =========================================
+   11. REGISTRATION FORM
+========================================= */
+.form-container {
+    max-width: 850px;
+    margin: auto;
+    padding: clamp(22px, 5vw, 42px);
+}
+
+.form-intro {
+    margin-bottom: 28px;
+    color: var(--muted);
+    font-size: .9rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 23px 20px;
+}
+
+.form-group {
+    min-width: 0;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+label, legend {
+    display: block;
+    margin-bottom: 9px;
+    color: #dce8fa;
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+input:not([type="radio"]):not([type="checkbox"]),
+select,
+textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 14px;
+    border: 1px solid rgba(135, 174, 235, .23);
+    border-radius: 10px;
+    outline: none;
+    background: rgba(5, 11, 24, .78);
+    color: #f1f5ff;
+    transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #7586a2;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(103, 232, 249, .09);
+}
+
+select option {
+    background: #101a2c;
+    color: white;
+}
+
+textarea {
+    resize: vertical;
+}
+
+fieldset {
+    min-width: 0;
+    padding: 17px;
+    border: 1px solid rgba(135, 174, 235, .22);
+    border-radius: 12px;
+}
+
+fieldset legend {
+    padding: 0 7px;
+}
+
+.choice {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 15px 5px 0;
+    color: #cbd5e1;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.choice input {
+    accent-color: var(--cyan);
+    width: 15px;
+    height: 15px;
+}
+
+.form-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 13px;
+    margin-top: 28px;
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 13px 21px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .25s ease, background .25s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.submit-button {
+    color: #08111e;
+    background: linear-gradient(110deg, var(--cyan), #a5b4fc);
+}
+
+.submit-button:hover {
+    background: linear-gradient(110deg, #a5f3fc, #c4b5fd);
+}
+
+.reset-button {
+    color: #dce5f6;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, .045);
+}
+
+.reset-button:hover {
+    background: rgba(255, 255, 255, .09);
+}
+
+.form-note {
+    margin-top: 18px;
+    color: #92a2bc;
+    font-size: .82rem;
+}
+
+/* =========================================
+   12. MULTIMEDIA
+========================================= */
+.media-card {
+    max-width: 850px;
+    margin: 0 auto 25px;
+    padding: clamp(20px, 4vw, 30px);
+    transition: border-color .3s ease, transform .3s ease;
+}
+
+.media-card:hover {
+    border-color: rgba(103, 232, 249, .42);
+}
+
+.media-card h3 {
+    margin-bottom: 8px;
+    color: #e7faff;
+    font-size: 1.15rem;
+}
+
+.media-note {
+    color: var(--muted);
+    font-size: .89rem;
+}
+
+audio {
+    display: block;
+    width: 100%;
+    margin-top: 18px;
+    accent-color: var(--cyan);
+}
+
+video, iframe {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-top: 18px;
+    border: 1px solid rgba(103, 232, 249, .24);
+    border-radius: 13px;
+    background: #03060c;
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+video:hover, iframe:hover {
+    border-color: rgba(180, 160, 255, .65);
+    box-shadow: 0 0 22px rgba(103, 232, 249, .09);
+}
+
+.media-caption {
+    margin-top: 12px;
+    color: #9eacc4;
+    font-size: .83rem;
+}
+
+/* =========================================
+   13. FOOTER
+========================================= */
+footer {
+    padding: 38px 20px;
+    text-align: center;
+    background: rgba(5, 10, 22, .85);
+    border-top: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.footer-mark {
+    color: var(--cyan);
+    font-size: 1rem;
+    font-weight: 750;
+    letter-spacing: 1px;
+}
+
+footer p {
+    color: #94a3bd;
+    font-size: .85rem;
+}
+
+footer p + p {
+    margin-top: 5px;
+}
+
+/* =========================================
+   14. RESPONSIVE DESIGN
+========================================= */
+@media (max-width: 850px) {
+    .card-container {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 24px;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .logo-text {
+        justify-content: center;
+    }
+
+    .nav-links {
+        justify-content: center;
+    }
+
+    .hero {
+        padding: 95px 18px 85px;
+    }
+
+    section {
+        padding: 60px 0;
+    }
+}
+
+@media (max-width: 560px) {
+    body {
+        background-attachment: scroll;
+        background-position: center top;
+    }
+
+    .container {
+        width: 92%;
+    }
+
+    nav {
+        gap: 10px;
+    }
+
+    .nav-links {
+        gap: 3px;
+    }
+
+    .nav-links a {
+        padding: 7px 9px;
+        font-size: .79rem;
+    }
+
+    .hero{
+    padding: 70px 12px 60px;
+}
+
+h1{
+    font-size: clamp(2rem, 10vw, 3rem);
+    line-height: 1.15;
+}
+
+.hero p{
+    font-size: .9rem;
+}
+
+.hero-actions{
+    flex-direction: column;
+}
+
+.main-button,
+.secondary-button{
+    width: 100%;
+}
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .form-container {
+        padding: 22px 17px;
+    }
+
+    .profile-card {
+        padding: 30px 20px;
+    }
+
+    .form-buttons button {
+        width: 100%;
+    }
+    nav{
+    flex-direction: column;
+    text-align: center;
+}
+
+.logo-text{
+    margin-bottom: 8px;
+}
+
+.nav-links{
+    justify-content: center;
+    width: 100%;
+}
+
+.nav-links a{
+    font-size: .75rem;
+    padding: 6px 8px;
+}
+}
+
+/* =========================================
+   15. ACCESSIBILITY
+========================================= */
+:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .card:hover, .profile-card:hover,
+    .school-logo:hover, .profile-image:hover,
+    button:hover, .main-button:hover,
+    .secondary-button:hover {
+        transform: none;
+    }
+}
+
+/* =========================================
+   16. ADVANCED COSMIC CSS ENHANCEMENTS
+========================================= */
+
+:root {
+    --glow-cyan: rgba(103, 232, 249, 0.32);
+    --glow-violet: rgba(180, 160, 255, 0.28);
+    --card-hover-bg: rgba(18, 32, 58, 0.94);
+}
+
+/* Glowing headings with text shadow */
+h1 {
+    text-shadow:
+        0 0 18px rgba(103, 232, 249, 0.13),
+        0 5px 35px rgba(0, 0, 0, 0.45);
+}
+
+.section-title h2 {
+    text-shadow:
+        0 0 18px rgba(103, 232, 249, 0.10),
+        0 3px 12px rgba(0, 0, 0, 0.35);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.section-title h2:hover {
+    color: var(--cyan);
+    text-shadow: 0 0 22px var(--glow-cyan);
+}
+
+/* Animated gradient border */
+@keyframes cosmicBorder {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Animated floating glow */
+@keyframes cosmicFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(2deg);
+    }
+}
+
+/* Soft glowing atmosphere */
+@keyframes cosmicPulse {
+    0%, 100% {
+        opacity: 0.30;
+        filter: blur(70px);
+    }
+
+    50% {
+        opacity: 0.65;
+        filter: blur(90px);
+    }
+}
+
+.hero::before {
+    animation: cosmicPulse 7s ease-in-out infinite;
+}
+
+/* Advanced feature cards */
+.card {
+    isolation: isolate;
+    border: 1px solid rgba(135, 174, 235, 0.22);
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.20),
+        inset 0 1px 0 rgba(255, 255, 255, 0.035);
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease;
+}
+
+/* Animated gradient outline */
+.card::after,
+.profile-card::after,
+.media-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+        120deg,
+        rgba(103, 232, 249, 0.0),
+        rgba(103, 232, 249, 0.7),
+        rgba(180, 160, 255, 0.8),
+        rgba(103, 232, 249, 0.0)
+    );
+    background-size: 250% 250%;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.card:hover::after,
+.profile-card:hover::after,
+.media-card:hover::after {
+    opacity: 1;
+    animation: cosmicBorder 4s ease infinite;
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.015);
+    background: var(--card-hover-bg);
+    border-color: rgba(103, 232, 249, 0.55);
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.30),
+        0 0 22px rgba(103, 232, 249, 0.10);
+}
+
+.card:nth-child(2):hover {
+    border-color: rgba(180, 160, 255, 0.65);
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.30),
+        0 0 24px var(--glow-violet);
+}
+
+.card:nth-child(3):hover {
+    border-color: rgba(125, 211, 252, 0.65);
+}
+
+/* Feature icon interaction */
+.card-icon {
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease;
+}
+
+.card:hover .card-icon {
+    transform: scale(1.12) rotate(-5deg);
+    box-shadow: 0 0 20px var(--glow-cyan);
+    background: rgba(103, 232, 249, 0.15);
+}
+
+/* Profile image opacity and transformation */
+.profile-image {
+    opacity: 0.90;
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.profile-image:hover {
+    opacity: 1;
+    transform: scale(1.07) rotate(2deg);
+    box-shadow:
+        0 0 25px var(--glow-cyan),
+        0 0 45px var(--glow-violet);
+}
+
+/* School logo enhancement */
+.school-logo {
+    opacity: 0.92;
+    transition:
+        opacity 0.3s ease,
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.school-logo:hover {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.04) rotate(-2deg);
+    box-shadow:
+        0 0 22px var(--glow-cyan),
+        0 0 40px rgba(180, 160, 255, 0.12);
+}
+
+/* Interactive registration buttons */
+.main-button,
+.secondary-button,
+button {
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.main-button:hover,
+.submit-button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 28px var(--glow-cyan);
+}
+
+.secondary-button:hover,
+.reset-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 22px var(--glow-violet);
+}
+
+/* Table row hover effect */
+tbody tr {
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+tbody tr:hover {
+    background: rgba(103, 232, 249, 0.075);
+}
+
+/* Media panels and videos */
+.media-card {
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.media-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(103, 232, 249, 0.5);
+    box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.25),
+        0 0 20px rgba(103, 232, 249, 0.07);
+}
+
+video:hover,
+iframe:hover {
+    border-color: var(--violet);
+    box-shadow: 0 0 24px var(--glow-violet);
+}
+
+/* More atmospheric falling stars */
+.starfield span {
+    will-change: transform, opacity;
+}
+
+.starfield span:nth-child(4n) {
+    width: 3px;
+    height: 3px;
+    box-shadow:
+        0 0 8px var(--cyan),
+        0 0 16px rgba(103, 232, 249, 0.25);
+}
+
+/* Cleaner navigation hover */
+.nav-links a {
+    position: relative;
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 4px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+}
+
+.nav-links a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Accessible keyboard navigation */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 4px;
+}
+
+/* Responsive refinement */
+@media (max-width: 850px) {
+    .card:hover {
+        transform: translateY(-4px);
+    }
+
+    .hero::before {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 560px) {
+    .card:hover {
+        transform: translateY(-3px);
+    }
+
+    .profile-image:hover,
+    .school-logo:hover {
+        transform: scale(1.02);
+    }
+
+    .section-title h2 {
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Accessibility: respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .card:hover,
+    .profile-card:hover,
+    .profile-image:hover,
+    .school-logo:hover,
+    .media-card:hover,
+    .main-button:hover,
+    .secondary-button:hover,
+    button:hover {
+        transform: none;
+    }
+}
+
+/* =========================================
+   NATURE & ELEGANCE
+   Bamboo • Ink • Ivory • Traditional Art
+========================================= */
+
+:root {
+    --bg: #171b16;
+    --panel: rgba(35, 43, 32, 0.94);
+    --panel-dark: rgba(24, 29, 22, 0.97);
+
+    --cyan: #b6c99a;
+    --blue: #d9d0b7;
+    --violet: #d0b68c;
+
+    --text: #f5f0e5;
+    --muted: #c1c4ae;
+    --border: rgba(191, 198, 160, 0.24);
+
+    --radius: 16px;
+
+    --bamboo: #9caf78;
+    --bamboo-dark: #536747;
+    --ivory: #f5f1e7;
+    --beige: #d8c8a8;
+    --ink: #171b16;
+}
+
+/* Base background */
+body {
+    color: var(--text);
+    background-color: var(--bg);
+
+    background-image:
+        linear-gradient(
+            180deg,
+            rgba(18, 23, 17, 0.76),
+            rgba(24, 29, 22, 0.88) 48%,
+            rgba(18, 22, 17, 0.96)
+        ),
+        url("wuthering-bg.png");
+
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+/* Natural selection color */
+::selection {
+    color: var(--ink);
+    background: var(--bamboo);
+}
+
+/* =========================================
+   TRADITIONAL BAMBOO DECORATION
+========================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+
+    opacity: 0.13;
+
+    background-image:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 75px,
+            rgba(177, 194, 143, 0.16) 76px,
+            transparent 78px,
+            transparent 150px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            transparent 0,
+            transparent 120px,
+            rgba(218, 201, 165, 0.09) 121px,
+            transparent 123px
+        );
+}
+
+/* Soft ivory and bamboo glow */
+.hero {
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(156, 175, 120, 0.16),
+            transparent 70%
+        );
+}
+
+.hero::before {
+    background: rgba(156, 175, 120, 0.12);
+}
+
+/* Elegant headings */
+h1 {
+    color: var(--ivory);
+    text-shadow:
+        0 3px 15px rgba(0, 0, 0, 0.42),
+        0 0 25px rgba(156, 175, 120, 0.10);
+}
+
+h1 span {
+    background: linear-gradient(
+        110deg,
+        #f5f1e7 0%,
+        #b8c99b 45%,
+        #d9c7a4 100%
+    );
+
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.section-title h2 {
+    color: var(--ivory);
+    text-shadow: 0 3px 14px rgba(0, 0, 0, 0.3);
+}
+
+.section-title h2:hover {
+    color: var(--bamboo);
+    text-shadow: 0 0 18px rgba(156, 175, 120, 0.18);
+}
+
+.section-kicker {
+    color: var(--bamboo);
+}
+
+/* =========================================
+   NAVIGATION — BLACK INK & BAMBOO
+========================================= */
+
+header {
+    background: rgba(23, 28, 21, 0.94);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.logo-text {
+    color: var(--ivory);
+}
+
+.logo-symbol {
+    color: var(--bamboo);
+    background: rgba(156, 175, 120, 0.09);
+    border: 1px solid rgba(156, 175, 120, 0.42);
+    box-shadow: 0 0 18px rgba(156, 175, 120, 0.08);
+}
+
+.nav-links a {
+    color: #d7d7c6;
+}
+
+.nav-links a:hover {
+    color: var(--bamboo);
+    background: rgba(156, 175, 120, 0.09);
+}
+
+.nav-links a::after {
+    background: linear-gradient(
+        90deg,
+        var(--bamboo),
+        var(--beige)
+    );
+}
+
+/* =========================================
+   HERO LABEL & BUTTONS
+========================================= */
+
+.hero-label {
+    color: var(--bamboo);
+    border-color: rgba(156, 175, 120, 0.38);
+    background: rgba(156, 175, 120, 0.08);
+}
+
+.main-button,
+.submit-button {
+    color: #1c2418;
+    background: linear-gradient(
+        115deg,
+        #c3d1a6,
+        #e0d3b8
+    );
+    box-shadow: 0 6px 22px rgba(156, 175, 120, 0.13);
+}
+
+.main-button:hover,
+.submit-button:hover {
+    color: #171b16;
+    background: linear-gradient(
+        115deg,
+        #dce8c4,
+        #f0e5cf
+    );
+    box-shadow: 0 8px 25px rgba(156, 175, 120, 0.22);
+}
+
+.secondary-button {
+    color: var(--ivory);
+    border-color: rgba(216, 200, 168, 0.35);
+    background: rgba(245, 241, 231, 0.035);
+}
+
+.secondary-button:hover {
+    color: var(--ivory);
+    background: rgba(156, 175, 120, 0.10);
+    box-shadow: 0 6px 22px rgba(156, 175, 120, 0.10);
+}
+
+.hero-divider {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--bamboo),
+        var(--beige),
+        transparent
+    );
+}
+
+/* =========================================
+   GLASS PANELS & TRADITIONAL FRAMING
+========================================= */
+
+.glass-panel,
+.card,
+.profile-card,
+.form-container,
+.media-card {
+    background: var(--panel);
+    border-color: var(--border);
+    box-shadow:
+        0 15px 38px rgba(0, 0, 0, 0.23),
+        inset 0 1px 0 rgba(245, 241, 231, 0.035);
+}
+
+.card::before,
+.profile-card::before,
+.form-container::before,
+.media-card::before {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(156, 175, 120, 0.65),
+        rgba(216, 200, 168, 0.65),
+        transparent
+    );
+}
+
+/* Subtle decorative corner framing */
+.card,
+.profile-card,
+.form-container,
+.media-card {
+    border-radius: 16px;
+}
+
+.card:hover {
+    background: rgba(43, 53, 38, 0.97);
+    border-color: rgba(156, 175, 120, 0.60);
+    box-shadow:
+        0 20px 42px rgba(0, 0, 0, 0.30),
+        0 0 18px rgba(156, 175, 120, 0.08);
+}
+
+.card:nth-child(2):hover,
+.card:nth-child(3):hover {
+    border-color: rgba(216, 200, 168, 0.58);
+    box-shadow:
+        0 20px 42px rgba(0, 0, 0, 0.28),
+        0 0 18px rgba(216, 200, 168, 0.08);
+}
+
+/* =========================================
+   HIDDEN PATTERNS — RAIN REVEAL EFFECT
+========================================= */
+
+/* Decorative patterns appear when hovering */
+.card::after,
+.profile-card::after,
+.media-card::after {
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            135deg,
+            transparent 15%,
+            rgba(156, 175, 120, 0.8),
+            rgba(216, 200, 168, 0.8),
+            transparent 85%
+        );
+
+    background-size: 250% 250%;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+}
+
+/* Bamboo-inspired feature icons */
+.card-icon {
+    color: var(--bamboo);
+    background: rgba(156, 175, 120, 0.10);
+    border-color: rgba(156, 175, 120, 0.27);
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease,
+        background 0.4s ease;
+}
+
+.card:nth-child(2) .card-icon,
+.card:nth-child(3) .card-icon {
+    color: var(--beige);
+    background: rgba(216, 200, 168, 0.08);
+    border-color: rgba(216, 200, 168, 0.24);
+}
+
+.card:hover .card-icon {
+    transform: scale(1.10) rotate(-5deg);
+    color: var(--ivory);
+    background: rgba(156, 175, 120, 0.19);
+    box-shadow: 0 0 18px rgba(156, 175, 120, 0.16);
+}
+
+/* =========================================
+   SCHOOL LOGO & PROFILE
+========================================= */
+
+.school-logo {
+    background: var(--ivory);
+    border-color: rgba(156, 175, 120, 0.65);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.20);
+}
+
+.school-logo:hover {
+    box-shadow: 0 0 28px rgba(156, 175, 120, 0.18);
+}
+
+.profile-card {
+    border-color: rgba(156, 175, 120, 0.28);
+}
+
+.profile-card:hover {
+    border-color: rgba(156, 175, 120, 0.65);
+}
+
+.profile-image {
+    background:
+        linear-gradient(var(--panel), var(--panel)) padding-box,
+        linear-gradient(
+            135deg,
+            var(--bamboo),
+            var(--beige),
+            var(--bamboo-dark)
+        ) border-box;
+
+    box-shadow: 0 0 22px rgba(156, 175, 120, 0.10);
+}
+
+.profile-image:hover {
+    box-shadow:
+        0 0 24px rgba(156, 175, 120, 0.20),
+        0 0 35px rgba(216, 200, 168, 0.08);
+}
+
+.profile-card h3 {
+    color: var(--ivory);
+}
+
+.profile-tag {
+    color: var(--bamboo);
+    background: rgba(156, 175, 120, 0.11);
+}
+
+/* =========================================
+   STUDENT TABLE
+========================================= */
+
+.table-wrapper {
+    background: rgba(25, 31, 23, 0.96);
+    border-color: var(--border);
+}
+
+th {
+    color: var(--bamboo);
+    background: rgba(156, 175, 120, 0.10);
+}
+
+td {
+    color: #e5e2d6;
+    border-bottom-color: rgba(191, 198, 160, 0.12);
+}
+
+tbody tr:hover {
+    background: rgba(156, 175, 120, 0.09);
+}
+
+/* =========================================
+   REGISTRATION FORM
+========================================= */
+
+input:not([type="radio"]):not([type="checkbox"]),
+select,
+textarea {
+    color: var(--ivory);
+    background: rgba(20, 25, 19, 0.90);
+    border-color: rgba(191, 198, 160, 0.25);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #a4aa96;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--bamboo);
+    box-shadow: 0 0 0 3px rgba(156, 175, 120, 0.12);
+}
+
+select option {
+    color: var(--ivory);
+    background: #252d22;
+}
+
+fieldset {
+    border-color: rgba(191, 198, 160, 0.26);
+}
+
+label,
+legend {
+    color: #e5e2d6;
+}
+
+.choice {
+    color: #d2d4c5;
+}
+
+.choice input {
+    accent-color: var(--bamboo);
+}
+
+.reset-button {
+    color: var(--ivory);
+    border-color: var(--border);
+    background: rgba(245, 241, 231, 0.045);
+}
+
+.reset-button:hover {
+    background: rgba(216, 200, 168, 0.10);
+}
+
+.form-note {
+    color: #b0b7a2;
+}
+
+/* =========================================
+   MULTIMEDIA
+========================================= */
+
+.media-card h3 {
+    color: var(--ivory);
+}
+
+video,
+iframe {
+    background: #11150f;
+    border-color: rgba(156, 175, 120, 0.35);
+}
+
+video:hover,
+iframe:hover {
+    border-color: var(--beige);
+    box-shadow: 0 0 22px rgba(156, 175, 120, 0.12);
+}
+
+.media-caption {
+    color: #b6b9a8;
+}
+
+/* =========================================
+   LINKS, FOOTER & ACCESSIBILITY
+========================================= */
+
+a {
+    color: var(--bamboo);
+}
+
+a:hover {
+    color: var(--beige);
+}
+
+footer {
+    background: rgba(19, 24, 18, 0.96);
+    border-top-color: var(--border);
+}
+
+.footer-mark {
+    color: var(--bamboo);
+}
+
+footer p {
+    color: #b6b9a8;
+}
+
+:focus-visible {
+    outline-color: var(--bamboo);
+}
+
+@media (max-width: 560px) {
+    body {
+        background-attachment: scroll;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+
+    .card:hover,
+    .profile-image:hover,
+    .school-logo:hover,
+    .media-card:hover,
+    .main-button:hover,
+    .secondary-button:hover,
+    button:hover {
+        transform: none;
+    }
+}
+
+/* Traditional botanical reveal */
+.card {
+    isolation: isolate;
+}
+.form-grid{
+    grid-template-columns: 1fr;
+}
+
+.form-group{
+    width: 100%;
+}
+video,
+iframe{
+    width: 100%;
+    height: auto;
+}
+
+audio{
+    width: 100%;
+}
+
+.card::before {
+    z-index: -1;
+    left: auto;
+    right: 12px;
+    top: 12px;
+    width: 105px;
+    height: 105px;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 15%,
+            rgba(156, 175, 120, 0.65) 0 5%,
+            transparent 7%
+        ),
+        radial-gradient(
+            ellipse at 30% 35%,
+            rgba(216, 200, 168, 0.55) 0 12%,
+            transparent 14%
+        ),
+        radial-gradient(
+            ellipse at 70% 35%,
+            rgba(156, 175, 120, 0.60) 0 12%,
+            transparent 14%
+        ),
+        radial-gradient(
+            ellipse at 35% 65%,
+            rgba(216, 200, 168, 0.45) 0 12%,
+            transparent 14%
+        ),
+        radial-gradient(
+            ellipse at 65% 65%,
+            rgba(156, 175, 120, 0.50) 0 12%,
+            transparent 14%
+        );
+
+    opacity: 0.12;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.card:hover::before {
+    opacity: 0.65;
+    transform: rotate(12deg) scale(1.08);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SUBTLE COSMIC STARFIELD -->
+<div class="starfield" aria-hidden="true">
+    <span style="--left:5%;--duration:12s;--delay:0s"></span>
+    <span style="--left:12%;--duration:16s;--delay:4s"></span>
+    <span style="--left:19%;--duration:13s;--delay:2s"></span>
+    <span style="--left:27%;--duration:18s;--delay:7s"></span>
+    <span style="--left:34%;--duration:14s;--delay:3s"></span>
+    <span style="--left:41%;--duration:17s;--delay:9s"></span>
+    <span style="--left:48%;--duration:13s;--delay:1s"></span>
+    <span style="--left:55%;--duration:19s;--delay:6s"></span>
+    <span style="--left:62%;--duration:15s;--delay:0s"></span>
+    <span style="--left:68%;--duration:18s;--delay:5s"></span>
+    <span style="--left:74%;--duration:14s;--delay:8s"></span>
+    <span style="--left:80%;--duration:17s;--delay:2s"></span>
+    <span style="--left:86%;--duration:13s;--delay:6s"></span>
+    <span style="--left:92%;--duration:19s;--delay:3s"></span>
+    <span style="--left:97%;--duration:16s;--delay:9s"></span>
+</div>
+
+<!-- NAVIGATION -->
+<header>
+    <nav class="container">
+        <a href="#home" class="logo-text">
+            <span class="logo-symbol" aria-hidden="true">✦</span>
+            BSIT PORTAL
+        </a>
+
+        <div class="nav-links">
+            <a href="Esmero3.html">Home</a>
+            <a href="#students">Students</a>
+            <a href="act-rigor fl.html">Profile</a>
+            <a href="#registration">Register</a>
+            <a href="#multimedia">Multimedia</a>
+            <a href="https://www.google.com"
+               target="_blank" rel="noopener noreferrer">Google ↗</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <span class="hero-label">
+                ✧ Technology · Innovation · Future ✧
+            </span>
+
+            <h1>
+                BSIT Student<br>
+                <span>Registration System</span>
+            </h1>
+
+            <p>
+                Welcome to your digital academic space.
+                Explore student information, discover the world of
+                information technology, and begin your learning journey.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#registration" class="main-button">
+                    Get Started &nbsp; →
+                </a>
+
+                <a href="#students" class="secondary-button">
+                    Explore Students
+                </a>
+            </div>
+
+            <div class="hero-divider"></div>
+        </div>
+    </section>
+
+    <!-- INSTITUTION -->
+    <section id="institution">
+        <div class="container center-content">
+            <div class="section-title">
+                <span class="section-kicker">Our Institution</span>
+                <h2>Learning Beyond Boundaries</h2>
+                <p>Building skills for a connected digital future.</p>
+            </div>
+
+            <a href="https://www.ctu.edu.ph"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Visit the official Cebu Technological University website">
+                <img src="logo.jpg"
+                     alt="Academic institution logo"
+                     class="school-logo">
+            </a>
+
+            <p class="logo-caption">
+                Click the logo to visit the official CTU website.
+            </p>
+
+            <p style="margin-top:15px">
+                <a href="https://www.ctu.edu.ph"
+                   target="_blank" rel="noopener noreferrer">
+                    Visit CTU Official Website ↗
+                </a>
+            </p>
+        </div>
+    </section>
+
+    <!-- STUDENT INFORMATION -->
+    <section id="students">
+        <div class="container">
+            <div class="section-title">
+                <span class="section-kicker">Student Directory</span>
+                <h2>Student Information</h2>
+                <p>Sample academic records from the BSIT community.</p>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Full Name</th>
+                            <th>Program</th>
+                            <th>Year Level</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>2026-001</td>
+                            <td>Juan Dela Cruz</td>
+                            <td>BSIT</td>
+                            <td>1st Year</td>
+                            <td>juan@example.com</td>
+                        </tr>
+                        <tr>
+                            <td>2026-002</td>
+                            <td>Maria Santos</td>
+                            <td>BSIT</td>
+                            <td>1st Year</td>
+                            <td>maria@example.com</td>
+                        </tr>
+                        <tr>
+                            <td>2026-003</td>
+                            <td>Pedro Reyes</td>
+                            <td>BSIT</td>
+                            <td>2nd Year</td>
+                            <td>pedro@example.com</td>
+                        </tr>
+                        <tr>
+                            <td>2026-004</td>
+                            <td>Ana Gomez</td>
+                            <td>BSIT</td>
+                            <td>2nd Year</td>
+                            <td>ana@example.com</td>
+                        </tr>
+                        <tr>
+                            <td>2026-005</td>
+                            <td>Mark Torralba</td>
+                            <td>BSIT</td>
+                            <td>3rd Year</td>
+                            <td>mark@example.com</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="profile">
+        <div class="container">
+            <div class="section-title">
+                <span class="section-kicker">About the Creator</span>
+                <h2>Student Profile</h2>
+                <p>Meet the student behind this digital project.</p>
+            </div>
+
+            <div class="profile-card">
+                <img src="pic.jpg"
+                     alt="Student profile of Rigor Esmero"
+                     class="profile-image">
+
+                <h3>RIGOR JR. F. ESMERO</h3>
+                <span class="profile-tag">BSIT · 2A</span>
+
+                <p>
+                    An aspiring IT professional interested in programming,
+                    digital systems, web development, and emerging technology.
+                    Always learning, creating, and exploring new possibilities.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECHNOLOGY -->
+    <section id="technology">
+        <div class="container">
+            <div class="section-title">
+                <span class="section-kicker">Discover & Create</span>
+                <h2>Explore Information Technology</h2>
+                <p>Three exciting fields shaping our digital world.</p>
+            </div>
+
+            <div class="card-container">
+                
+<article class="card">
+    <div class="card-icon" aria-hidden="true">✧</div>
+    <h3>AI & Future Technology</h3>
+    <p>
+        Explore artificial intelligence, automation, and emerging
+        technologies that are transforming our digital world.
+    </p>
+</article>
+
+<article class="card">
+    <div class="card-icon" aria-hidden="true">⌘</div>
+    <h3>Programming & Development</h3>
+    <p>
+        Turn creative ideas into functional applications through
+        programming, logical thinking, and web development.
+    </p>
+</article>
+
+<article class="card">
+    <div class="card-icon" aria-hidden="true">◈</div>
+    <h3>Networks & Digital Systems</h3>
+    <p>
+        Discover how computer networks, databases, and information
+        systems connect people and power modern organizations.
+    </p>
+</article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- REGISTRATION -->
+    <section id="registration">
+        <div class="container">
+            <div class="section-title">
+                <span class="section-kicker">Your Academic Journey</span>
+                <h2>Student Registration</h2>
+                <p>Enter your information in the form below.</p>
+            </div>
+
+            <div class="form-container">
+                <p class="form-intro">
+                    Please complete the required fields marked by your browser
+                    before submitting the demonstration form.
+                </p>
+
+                <form action="#" method="get">
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="fullname">Full Name *</label>
+                            <input type="text" id="fullname"
+                                   name="fullname"
+                                   placeholder="Enter your full name"
+                                   autocomplete="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email"
+                                   name="email"
+                                   placeholder="you@example.com"
+                                   autocomplete="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password *</label>
+                            <input type="password" id="password"
+                                   name="password"
+                                   placeholder="Create a password"
+                                   autocomplete="new-password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" name="age"
+                                   min="15" max="100"
+                                   placeholder="Enter your age">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birthdate">Birthdate</label>
+                            <input type="date" id="birthdate"
+                                   name="birthdate">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mobile">Mobile Number</label>
+                            <input type="tel" id="mobile" name="mobile"
+                                   placeholder="Enter mobile number"
+                                   autocomplete="tel">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="program">Program *</label>
+                            <select id="program" name="program" required>
+                                <option value="">-- Select Program --</option>
+                                <option value="bsit">BS Information Technology</option>
+                                <option value="bscs">BS Computer Science</option>
+                                <option value="bsis">BS Information Systems</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <fieldset>
+                                <legend>Year Level *</legend>
+
+                                <label class="choice">
+                                    <input type="radio" name="year"
+                                           value="1st Year" required>
+                                    1st Year
+                                </label>
+
+                                <label class="choice">
+                                    <input type="radio" name="year"
+                                           value="2nd Year">
+                                    2nd Year
+                                </label>
+
+                                <label class="choice">
+                                    <input type="radio" name="year"
+                                           value="3rd Year">
+                                    3rd Year
+                                </label>
+
+                                <label class="choice">
+                                    <input type="radio" name="year"
+                                           value="4th Year">
+                                    4th Year
+                                </label>
+                            </fieldset>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <fieldset>
+                                <legend>Programming Skills</legend>
+
+                                <label class="choice">
+                                    <input type="checkbox" name="skills"
+                                           value="HTML"> HTML
+                                </label>
+
+                                <label class="choice">
+                                    <input type="checkbox" name="skills"
+                                           value="CSS"> CSS
+                                </label>
+
+                                <label class="choice">
+                                    <input type="checkbox" name="skills"
+                                           value="JavaScript"> JavaScript
+                                </label>
+
+                                <label class="choice">
+                                    <input type="checkbox" name="skills"
+                                           value="Java"> Java
+                                </label>
+                            </fieldset>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="address">Address</label>
+                            <textarea id="address" name="address"
+                                      rows="4"
+                                      placeholder="Enter your address"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="submit" class="submit-button">
+                            Submit Registration →
+                        </button>
+                        <button type="reset" class="reset-button">
+                            Clear Form
+                        </button>
+                    </div>
+
+                    <p class="form-note">
+                        Note: This is a front-end demonstration.
+                        Information is not saved to a database.
+                        Avoid entering real passwords or sensitive personal data.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- MULTIMEDIA -->
+    <section id="multimedia">
+        <div class="container">
+            <div class="section-title">
+                <span class="section-kicker">Audio & Visual Learning</span>
+                <h2>BSIT Multimedia</h2>
+                <p>Explore educational resources related to information technology.</p>
+            </div>
+
+            <div class="media-card">
+                <h3>♫ &nbsp; Audio Introduction</h3>
+                <p class="media-note">
+                    Listen to a short introduction to information technology.
+                </p>
+
+                <audio controls preload="metadata">
+                    <source src="Information Technology In 4 Minutes.mp3"
+                            type="audio/mpeg">
+                    Your browser does not support audio playback.
+                </audio>
+            </div>
+
+            <div class="media-card">
+                <h3>▶ &nbsp; BSIT Educational Video</h3>
+                <p class="media-note">
+                    Watch an educational video about information technology.
+                </p>
+
+                <video controls preload="metadata">
+                    <source src="IT.mp4" type="video/mp4">
+                    Your browser does not support video playback.
+                </video>
+
+                <p class="media-caption">
+                    Use a captioned video whenever possible to make the
+                    learning experience more accessible.
+                </p>
+            </div>
+
+            <div class="media-card">
+                <h3>⌘ &nbsp; HTML Educational Video</h3>
+                <p class="media-note">
+                    Watch a short guide to HTML and web development.
+                </p>
+
+                <video controls preload="metadata">
+                    <source src="HTML in 5 minutes.mp4" type="video/mp4">
+                    Your browser does not support video playback.
+                </video>
+
+                <p class="media-caption">
+                    This local video requires the corresponding MP4 file
+                    to be present in the website folder.
+                </p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <p class="footer-mark">✦ BSIT STUDENT PORTAL</p>
+        <p>Designed for learning, creativity, and innovation.</p>
+        <p>© 2026 BSIT Student Portal. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

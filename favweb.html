@@ -1,0 +1,377 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>My Favorite Website</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+* {
+    word-wrap: break-word;
+}
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background:
+                linear-gradient(rgba(20, 35, 27, 0.82),
+                                rgba(20, 35, 27, 0.90)),
+                url("wuthering-bg.png") center/cover fixed,
+                #26382d;
+            min-height: 100vh;
+            padding: 35px 18px;
+            line-height: 1.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .as {
+            width: 100%;
+            max-width: 900px;
+            padding: 45px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(243, 235, 221, 0.96);
+            border: 1px solid #A8B49A;
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+            animation: fadeIn 1s ease;
+            transition: box-shadow 0.4s ease;
+        }
+
+        .as:hover {
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.45);
+        }
+
+        /* Bamboo-inspired decorative details */
+        .as::before,
+        .as::after {
+            content: "";
+            position: absolute;
+            width: 5px;
+            height: 130px;
+            background: linear-gradient(
+                to bottom,
+                #71866B,
+                #A8B49A,
+                #71866B
+            );
+            opacity: 0.45;
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .as::before {
+            top: 20px;
+            left: 15px;
+            transform: rotate(15deg);
+        }
+
+        .as::after {
+            bottom: 20px;
+            right: 15px;
+            transform: rotate(15deg);
+        }
+
+        h1 {
+            text-align: center;
+            color: #293D30;
+            margin-bottom: 30px;
+            font-size: clamp(1.8rem, 5vw, 2.7rem);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 1px 2px 3px rgba(41, 61, 48, 0.15);
+            border-bottom: 2px solid #A8B49A;
+            padding-bottom: 18px;
+            line-height: 1.4;
+        }
+
+        h1::after {
+            content: "❧";
+            display: block;
+            color: #71866B;
+            font-size: 1.5rem;
+            margin-top: 8px;
+        }
+
+        h2 {
+            color: #526B50;
+            border-left: 5px solid #8FA184;
+            padding-left: 14px;
+            margin-top: 32px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            font-style: italic;
+            transition: padding-left 0.3s ease;
+        }
+
+        h2:hover {
+            padding-left: 22px;
+        }
+
+        p {
+            color: #41483E;
+            margin: 12px 0;
+            font-size: 1.08rem;
+            line-height: 1.9;
+            text-align: justify;
+        }
+
+        p a {
+            color: #526B50;
+            font-weight: bold;
+            text-decoration: none;
+            border-bottom: 1px solid #A8B49A;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+
+        p a:hover {
+            color: #8B7653;
+            border-color: #8B7653;
+        }
+
+        /* Website image gallery */
+        .gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 22px auto 30px;
+            padding: 10px;
+            max-width: 650px;
+            background: #E2DDCC;
+            border: 1px solid #A8B49A;
+            border-radius: 14px;
+            box-shadow: 0 8px 22px rgba(41, 61, 48, 0.15);
+            transition: transform 0.4s ease,
+                        box-shadow 0.4s ease,
+                        border-color 0.4s ease;
+        }
+
+        .gallery img {
+            display: block;
+            width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+            border-radius: 8px;
+            transition: transform 0.4s ease,
+                        filter 0.4s ease;
+        }
+
+        .gallery:hover {
+            transform: translateY(-5px);
+            border-color: #71866B;
+            box-shadow: 0 14px 28px rgba(41, 61, 48, 0.25);
+        }
+
+        .gallery:hover img {
+            filter: brightness(1.04);
+            transform: scale(1.015);
+        }
+
+        /* Home button */
+        .button-container {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        a.btn {
+    display: inline-block;
+    background: #526B50;
+    color: #F3EBDD;
+    padding: 12px 30px;
+    border: 1px solid #71866B;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 14px rgba(41, 61, 48, 0.2);
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+        a.btn:hover {
+            background: #DCC9A3;
+            color: #293D30;
+            transform: translateY(-4px);
+            box-shadow: 0 9px 20px rgba(41, 61, 48, 0.25);
+        }
+
+        a:focus-visible {
+            outline: 3px solid #71866B;
+            outline-offset: 4px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        /* =====================================
+   SMARTPHONE OPTIMIZATION
+===================================== */
+@media (max-width: 600px) {
+
+    body {
+        padding: 12px;
+        background-attachment: scroll;
+        align-items: flex-start;
+    }
+
+    .as {
+        width: 100%;
+        padding: 20px 15px;
+        border-radius: 14px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        line-height: 1.3;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+    }
+
+    h1::after {
+        font-size: 1.2rem;
+    }
+
+    h2 {
+        font-size: 1.1rem;
+        margin-top: 20px;
+        margin-bottom: 12px;
+        padding-left: 10px;
+    }
+
+    p {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        text-align: left;
+    }
+
+    .gallery {
+        width: 100%;
+        padding: 6px;
+        margin: 15px auto 20px;
+    }
+
+    .gallery img {
+        width: 100%;
+        height: auto;
+        max-height: 220px;
+        object-fit: contain;
+    }
+
+    .button-container {
+        margin-top: 25px;
+    }
+
+    a.btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    .as::before,
+    .as::after {
+        display: none;
+    }
+}
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="as">
+
+        <h1>My Favorite Website</h1>
+
+        <h2>Canva</h2>
+
+        <p>
+            One website that I often visit is
+            <a href="https://www.canva.com"
+   target="_blank"
+   rel="noopener noreferrer">
+   Canva
+</a>
+            Canva is a design tool that helps me create graphics,
+            presentations, and projects easily using ready-made templates.
+            It is useful for expressing creativity and making school
+            activities more attractive.
+        </p>
+
+        <div class="gallery">
+            <img src="can.jpg" alt="Canva website">
+        </div>
+
+        <h2>Brave Browser</h2>
+
+        <p>
+            Another browser I often use is
+            <a href="https://brave.com"
+   target="_blank"
+   rel="noopener noreferrer">
+   Brave Browser
+</a>
+            Brave focuses on speed, security, and privacy. Its built-in
+            protection against many ads and trackers can make browsing
+            smoother and help protect personal information.
+        </p>
+
+        <div class="gallery">
+            <img src="brave.jpg" alt="Brave Browser">
+        </div>
+
+        <div class="button-container">
+            <a href="act-rigor fl.html" class="btn">❧ Home ❧</a>
+        </div>
+
+    </div>
+</body>
+</html>
+```
